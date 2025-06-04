@@ -2,6 +2,8 @@ const { Router } = require('express');
 const todoRoutes = Router();
 const {todoModel} = require('../db')
 const {userAuthentication} = require('../middlewares/user')
+const mongoose = require("mongoose");
+
 
 todoRoutes.post('/createTodo', userAuthentication, async function(req, res){
     console.log("the program has reached the createTodo api"    )
@@ -56,6 +58,36 @@ try {
   res.status(500).json({ mssg: "Error updating todo", error: err.message });
 }
 
+})
+
+todoRoutes.delete('/deleteTodo', userAuthentication, async function(req, res){
+  const userId = new mongoose.Types.ObjectId(req.userId);
+  const {todoId} = req.body;
+
+  console.log("todoId:", todoId);
+console.log("userId:", userId);
+
+  const result = await todoModel.deleteOne({
+    _id: todoId,
+    userId
+  })
+
+  if (result.deletedCount === 0) {
+  return res.status(404).json({ msg: "Todo not found or unauthorized" });
+}
+
+  res.json({msg: "todo deleted successfully"})
+})
+
+todoRoutes.get('/preview', userAuthentication, async function(req,res){
+  const userId = req.userId;
+
+  const userTodos = await todoModel.find({
+    userId: userId
+  })
+  res.json({
+    userTodos
+  })
 })
 
 module.exports = {
