@@ -1,22 +1,37 @@
 import React from "react";
 import Header from "./MyComponents/Headers";
-import { TodoItem } from "./MyComponents/TodoItem";
 import { Footer } from "./MyComponents/Footer";
 import Todos from "./MyComponents/Todos";
-import Auth from "./pages/Auth";
+import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/todoiest" element={<Layout />}>
+          <Route index element={<Todos />} />{" "}
+          {/* Default route for /todoiest */}
+          <Route path="todos" element={<Todos />} />
+          <Route path="signin" element={<Signin />} />
+          <Route path="signup" element={<Signup />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+// Layout component with header and footer
+function Layout() {
+  return (
+    <>
       <Header title="My Todo List" searchBar={true} />
-      {/* <Todos /> */}
-      <Auth />
-      <Signin />
-      {/* <Routes>
-        <Route path="/auth" element={<Auth />} />
-      </Routes> */}
-    </div>
+      <main style={{ padding: "20px" }}>
+        <Outlet />
+      </main>
+      <Footer />
+    </>
   );
 }
 
