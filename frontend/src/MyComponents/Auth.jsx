@@ -1,13 +1,14 @@
 // components/AuthForm.jsx
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import check from "../assets/check.webp";
 import cross from "../assets/cross.png";
 import "../styles/Auth.css";
 
 export default function AuthForm({ type }) {
   const isSignup = type === "signup";
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,16 +26,25 @@ export default function AuthForm({ type }) {
         `http://localhost:3000${endpoint}`,
         data
       );
+
+      const token = response.data.token;
+      localStorage.setItem("token", token);
+      console.log(token);
+
       console.log(
         `${isSignup ? "Signup" : "Signin"} successful:`,
         response.data
       );
+
+      navigate(`${isSignup ? "/todoiest/signin" : "/todoiest/todos"}`);
+
       alert(`${isSignup ? "Signup" : "Signin"} successful`);
     } catch (error) {
       console.error(
         `${isSignup ? "Signup" : "Signin"} failed:`,
         error.response?.data || error.message
       );
+
       alert(`${isSignup ? "Signup" : "Signin"} failed`);
     }
   };

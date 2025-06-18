@@ -5,6 +5,7 @@ import Todos from "./MyComponents/Todos";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import Addtodo from "./MyComponents/Addtodo";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="todos" element={<Todos />} />
           <Route path="signin" element={<Signin />} />
           <Route path="signup" element={<Signup />} />
+          <Route path="addtodo" element={<Addtodo />} />
         </Route>
       </Routes>
     </BrowserRouter>

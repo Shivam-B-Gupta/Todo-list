@@ -17,8 +17,8 @@ export default function Header({ title, searchBar }) {
           <Link to="#" className="nav-link">
             About
           </Link>
-          <Link to="#" className="nav-link">
-            Contact
+          <Link to="/todoiest/addtodo" className="nav-link">
+            Add Todo
           </Link>
           <Link to="/todoiest/signup" className="nav-link">
             Signup
