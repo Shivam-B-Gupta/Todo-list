@@ -6,6 +6,7 @@ import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Addtodo from "./MyComponents/Addtodo";
+import Oops from "./pages/Ooops";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="signin" element={<Signin />} />
           <Route path="signup" element={<Signup />} />
           <Route path="addtodo" element={<Addtodo />} />
+          <Route path="*" element={<Oops />} />
         </Route>
       </Routes>
     </BrowserRouter>

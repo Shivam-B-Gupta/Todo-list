@@ -3,7 +3,7 @@ import Button from "./Button";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 
-export default function DeleteTodo({ todoId }) {
+export default function DeleteTodo({ todoId, onDelete }) {
   async function handleSubmit() {
     await axios.delete(`${BACKEND_URL}/todo/deleteTodo`, {
       headers: {
@@ -13,6 +13,11 @@ export default function DeleteTodo({ todoId }) {
         todoId: todoId,
       },
     });
+
+    // 🧠 Inform parent to update UI
+    if (onDelete) {
+      onDelete(); // remove it from UI
+    }
   }
 
   return (
