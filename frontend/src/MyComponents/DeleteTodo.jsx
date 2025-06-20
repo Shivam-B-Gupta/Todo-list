@@ -22,7 +22,7 @@ export default function DeleteTodo({ todoId, onDelete }) {
 
   return (
     <div>
-      <Button innerText={"Delete Todo"} submit={handleSubmit} />
+      <Button innerText={"Delete"} submit={handleSubmit} />
     </div>
   );
 }

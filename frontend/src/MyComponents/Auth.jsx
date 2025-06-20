@@ -31,6 +31,10 @@ export default function AuthForm({ type }) {
       localStorage.setItem("token", token);
       console.log(token);
 
+      const firstname = response.data.firstname;
+      localStorage.setItem("firstname", firstname);
+      console.log(firstname);
+
       console.log(
         `${isSignup ? "Signup" : "Signin"} successful:`,
         response.data
@@ -38,7 +42,7 @@ export default function AuthForm({ type }) {
 
       navigate(`${isSignup ? "/todoiest/signin" : "/todoiest/todos"}`);
 
-      alert(`${isSignup ? "Signup" : "Signin"} successful`);
+      // alert(`${isSignup ? "Signup" : "Signin"} successful`);
     } catch (error) {
       console.error(
         `${isSignup ? "Signup" : "Signin"} failed:`,

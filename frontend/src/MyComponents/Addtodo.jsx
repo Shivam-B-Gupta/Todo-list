@@ -1,9 +1,10 @@
 import axios from "axios";
 import Inputfield from "./Input";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import React from "react";
 import { BACKEND_URL } from "../config";
 import Button from "./Button";
+import PopUpModal from "./PopUpModal";
 import { useNavigate } from "react-router-dom";
 
 export default function Addtodo() {
@@ -11,14 +12,19 @@ export default function Addtodo() {
   const [description, setDescription] = useState("");
   const data = { title, description };
   const navigate = useNavigate();
+  const inputRef = useRef();
 
   async function handleSubmit() {
     try {
-      const respose = await axios.post(`${BACKEND_URL}/todo/createTodo`, data, {
-        headers: {
-          token: localStorage.getItem("token"),
-        },
-      });
+      const response = await axios.post(
+        `${BACKEND_URL}/todo/createTodo`,
+        data,
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
       navigate("/todoiest/todos");
       alert("Todo added successfully!");
       settitle("");
@@ -30,19 +36,14 @@ export default function Addtodo() {
 
   return (
     <div>
-      <Inputfield
-        type="text"
-        placeholder="Title"
-        setVariable={settitle}
-        value={title}
+      <PopUpModal
+        submit={handleSubmit}
+        innerText="Add Todo"
+        title={title}
+        setTitle={settitle}
+        description={description}
+        setDescription={setDescription}
       />
-      <Inputfield
-        type="text"
-        placeholder="Description"
-        setVariable={setDescription}
-        value={description}
-      />
-      <Button submit={handleSubmit} innerText={"Add Todo"} />
     </div>
   );
 }

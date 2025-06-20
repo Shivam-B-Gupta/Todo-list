@@ -4,6 +4,14 @@ import "../styles/Headers.css";
 import { Link } from "react-router-dom";
 
 export default function Header({ title, searchBar }) {
+  try {
+    const firstname = localStorage.getItem("firstname");
+    const letters = firstname.split("");
+    const firstletter = letters[0];
+    console.log(`firstletter of firstname: ${firstletter}`);
+  } catch (err) {
+    console.log(`error: ${err}`);
+  }
   return (
     <div>
       <nav className="navbar">
@@ -24,6 +32,7 @@ export default function Header({ title, searchBar }) {
             Signup
           </Link>
         </div>
+        <button></button>
         {searchBar ? (
           <form className="search-form">
             <input

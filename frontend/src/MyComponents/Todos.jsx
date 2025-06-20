@@ -3,6 +3,7 @@ import useContent from "../hooks/useContent";
 import Card from "./Card";
 import Button from "./Button";
 import DeleteTodo from "./DeleteTodo";
+import UpdateTodo from "./UpdateTodo";
 
 function TodoList() {
   const contents = useContent(); // Fetching from backend
@@ -31,7 +32,7 @@ function TodoList() {
                 todoId={todo._id}
                 onDelete={() => handleDelete(todo._id)}
               />
-              <Button innerText={"Update"} />
+              <UpdateTodo todo={todo} />
             </div>
           </Card>
         ))
