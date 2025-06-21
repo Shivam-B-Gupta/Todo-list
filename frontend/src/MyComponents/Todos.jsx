@@ -18,6 +18,9 @@ function TodoList() {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo._id !== id));
   }
 
+  //Update todo from UI after Updation
+  function handleUpdate() {}
+
   return (
     <div style={{ display: "flex", flexWrap: "wrap" }}>
       {todos.length === 0 ? (
@@ -32,7 +35,16 @@ function TodoList() {
                 todoId={todo._id}
                 onDelete={() => handleDelete(todo._id)}
               />
-              <UpdateTodo todo={todo} />
+              <UpdateTodo
+                todo={todo}
+                onUpdate={(updatedTodo) => {
+                  setTodos((prev) =>
+                    prev.map((t) =>
+                      t._id === updatedTodo._id ? updatedTodo : t
+                    )
+                  );
+                }}
+              />
             </div>
           </Card>
         ))
