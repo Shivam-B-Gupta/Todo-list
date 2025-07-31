@@ -2,6 +2,7 @@ import React from "react";
 import Button from "./Button";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
+import { IconTrash } from "@tabler/icons-react";
 
 export default function DeleteTodo({ todoId, onDelete }) {
   async function handleSubmit() {
@@ -14,7 +15,7 @@ export default function DeleteTodo({ todoId, onDelete }) {
       },
     });
 
-    // 🧠 Inform parent to update UI
+    //  Inform parent to update UI
     if (onDelete) {
       onDelete(); // remove it from UI
     }
@@ -22,7 +23,7 @@ export default function DeleteTodo({ todoId, onDelete }) {
 
   return (
     <div>
-      <Button innerText={"Delete"} submit={handleSubmit} />
+      <Button innerText={<IconTrash stroke={2} />} submit={handleSubmit} />
     </div>
   );
 }

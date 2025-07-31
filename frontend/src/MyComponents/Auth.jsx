@@ -54,8 +54,8 @@ export default function AuthForm({ type }) {
   };
 
   return (
-    <div className="container">
-      <div className="left-container">
+    <div className="container ">
+      <div className="left-container ">
         <h1>
           {isSignup ? "A few steps away from becoming a pro" : "Welcome Back!"}
         </h1>

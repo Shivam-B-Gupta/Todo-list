@@ -1,5 +1,5 @@
 import React from "react";
-import Inputfield from "./Input";
+import { Inputfield2 } from "./Input";
 import Button from "./Button";
 import TimeIcon from "../icons/time";
 
@@ -46,18 +46,18 @@ export default function PopUpModal({
       >
         <input
           type="text"
-          placeholder="Add Title.."
-          style={inputStyle}
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <input
-          type="text"
           placeholder="Description..."
           style={inputStyle}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+        <Inputfield2
+          type="text"
+          title="Add title"
+          setVariable={setTitle}
+          value={title}
+        />
+
         <div
           style={{
             display: "flex",

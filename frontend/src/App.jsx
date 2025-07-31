@@ -1,12 +1,13 @@
 import React from "react";
+import SideBar from "./MyComponents/SideBar";
 import Header from "./MyComponents/Headers";
 import Todos from "./MyComponents/Todos";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Addtodo from "./MyComponents/Addtodo";
 import Oops from "./pages/Ooops";
 import PopUpModal from "./MyComponents/PopUpModal";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 
 function App() {
   return (
@@ -31,10 +32,16 @@ function App() {
 function Layout() {
   return (
     <>
-      <Header title="My Todo List" searchBar={true} />
-      <main style={{ padding: "20px" }}>
-        <Outlet />
-      </main>
+      <div className="grid grid-cols-7 min-h-screen">
+        {/* Sidebar (20%) */}
+        <div className="col-span-0  hidden md:col-span-1 md:block">
+          <SideBar />
+        </div>
+        <div className="col-span-7 md:col-span-6 ">
+          <Header title="My Todo List" searchBar={true} />
+          <Outlet />
+        </div>
+      </div>
     </>
   );
 }

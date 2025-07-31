@@ -23,3 +23,15 @@ export default function Inputfield({ type, placeholder, setVariable, value }) {
     </div>
   );
 }
+
+export function Inputfield2({ title, type, value, setVariable }) {
+  return (
+    <input
+      type={type}
+      placeholder={title}
+      value={value}
+      onChange={(e) => setVariable(e.target.value)}
+      className="border-none outline-none p-4  h-12 "
+    />
+  );
+}

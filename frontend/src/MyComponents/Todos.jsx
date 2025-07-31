@@ -22,30 +22,35 @@ function TodoList() {
   function handleUpdate() {}
 
   return (
-    <div style={{ display: "flex", flexWrap: "wrap" }}>
+    <div className="flex flex-wrap">
       {todos.length === 0 ? (
         <p>No todos found.</p>
       ) : (
         todos.map((todo) => (
           <Card key={todo._id}>
-            <h3>{todo.title}</h3>
-            <p>{todo.description}</p>
-            <div style={{ display: "flex" }}>
-              <DeleteTodo
-                todoId={todo._id}
-                onDelete={() => handleDelete(todo._id)}
-              />
-              <UpdateTodo
-                todo={todo}
-                onUpdate={(updatedTodo) => {
-                  setTodos((prev) =>
-                    prev.map((t) =>
-                      t._id === updatedTodo._id ? updatedTodo : t
-                    )
-                  );
-                }}
-              />
+            <div className="flex justify-between">
+              <div className="flex gap-2">
+                <input type="radio" />
+                <h2 className="font-bold">{todo.title}</h2>
+              </div>
+              <div className="flex gap-2">
+                <DeleteTodo
+                  todoId={todo._id}
+                  onDelete={() => handleDelete(todo._id)}
+                />
+                <UpdateTodo
+                  todo={todo}
+                  onUpdate={(updatedTodo) => {
+                    setTodos((prev) =>
+                      prev.map((t) =>
+                        t._id === updatedTodo._id ? updatedTodo : t
+                      )
+                    );
+                  }}
+                />
+              </div>
             </div>
+            <p>{todo.description}</p>
           </Card>
         ))
       )}

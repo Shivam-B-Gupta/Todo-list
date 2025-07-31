@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "../styles/Headers.css";
 import { Link } from "react-router-dom";
 
 export default function Header({ title, searchBar }) {
@@ -14,33 +13,28 @@ export default function Header({ title, searchBar }) {
   }
   return (
     <div>
-      <nav className="navbar">
-        <Link to="#" className="navbar-brand">
+      <nav className="bg-red-100 flex justify-between">
+        <Link to="#" className="">
           {title}
         </Link>
-        <div className="nav-links">
-          <Link to="/todoiest" className="nav-link">
+        <div className="">
+          <Link to="/todoiest" className="">
             Home
           </Link>
-          <Link to="#" className="nav-link">
+          <Link to="#" className="">
             About
           </Link>
-          <Link to="/todoiest/addtodo" className="nav-link">
+          <Link to="/todoiest/addtodo" className="">
             Add Todo
           </Link>
-          <Link to="/todoiest/signup" className="nav-link">
+          <Link to="/todoiest/signup" className="">
             Signup
           </Link>
         </div>
-        <button></button>
         {searchBar ? (
-          <form className="search-form">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="search-input"
-            />
-            <button type="submit" className="search-button">
+          <form className="">
+            <input type="text" placeholder="Search..." className="" />
+            <button type="submit" className="">
               Search
             </button>
           </form>
@@ -49,7 +43,7 @@ export default function Header({ title, searchBar }) {
             SearchBar is disabled
           </span>
         )}
-      </nav>
+      </nav>{" "}
     </div>
   );
 }

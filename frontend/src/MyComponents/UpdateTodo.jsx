@@ -3,6 +3,7 @@ import Button from "./Button";
 import { BACKEND_URL } from "../config";
 import PopUpModal from "./PopUpModal";
 import axios from "axios";
+import { IconEdit } from "@tabler/icons-react";
 
 export default function UpdateTodo({ todo, onUpdate }) {
   console.log(todo);
@@ -38,7 +39,10 @@ export default function UpdateTodo({ todo, onUpdate }) {
   }
   return (
     <div>
-      <Button innerText={"Update"} submit={() => setShowModal(true)} />
+      <Button
+        innerText={<IconEdit stroke={2} />}
+        submit={() => setShowModal(true)}
+      />
       {showModal && (
         <PopUpModal
           innerText={"Update Todo"}
