@@ -1,40 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 export default function Header({ title, searchBar }) {
-  try {
-    const firstname = localStorage.getItem("firstname");
-    const letters = firstname.split("");
-    const firstletter = letters[0];
-    console.log(`firstletter of firstname: ${firstletter}`);
-  } catch (err) {
-    console.log(`error: ${err}`);
-  }
+  const [firstLetter, setFirstLetter] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    try {
+      const storedName = localStorage.getItem("firstname") || "";
+      setFirstname(storedName);
+      const storedEmail = localStorage.getItem("email") || "";
+      setEmail(storedEmail);
+      if (storedName.trim().length > 0) {
+        setFirstLetter(storedName[0].toUpperCase());
+        console.log("First letter:", storedName[0].toUpperCase());
+      }
+    } catch (err) {
+      console.log(`error: ${err}`);
+    }
+  }, []);
+
   return (
     <div>
-      <nav className="bg-red-100 flex justify-between">
-        <Link to="#" className="">
-          {title}
-        </Link>
-        <div className="">
-          <Link to="/todoiest" className="">
-            Home
-          </Link>
-          <Link to="#" className="">
-            About
-          </Link>
-          <Link to="/todoiest/addtodo" className="">
-            Add Todo
-          </Link>
-          <Link to="/todoiest/signup" className="">
-            Signup
-          </Link>
-        </div>
+      <nav className="bg-blue-950 flex justify-between items-center h-12 px-4">
         {searchBar ? (
-          <form className="">
-            <input type="text" placeholder="Search..." className="" />
-            <button type="submit" className="">
+          <form>
+            <input
+              type="text"
+              placeholder="Search..."
+              className="border p-1 bg-white rounded"
+            />
+            <button
+              type="submit"
+              className="ml-2 bg-blue-500 text-white px-2 py-1 rounded"
+            >
               Search
             </button>
           </form>
@@ -43,7 +44,16 @@ export default function Header({ title, searchBar }) {
             SearchBar is disabled
           </span>
         )}
-      </nav>{" "}
+        <div className="flex items-center gap-2">
+          <div className="bg-gray-300 rounded-full w-10 h-10 flex items-center justify-center text-sm font-bold cursor-pointer">
+            {firstLetter}
+          </div>
+          <div className="flex flex-col text-white">
+            <span>{firstname}</span>
+            <span>{email} </span>
+          </div>
+        </div>
+      </nav>
     </div>
   );
 }

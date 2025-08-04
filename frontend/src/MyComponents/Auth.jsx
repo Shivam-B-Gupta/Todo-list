@@ -35,6 +35,10 @@ export default function AuthForm({ type }) {
       localStorage.setItem("firstname", firstname);
       console.log(firstname);
 
+      const email = response.data.email;
+      localStorage.setItem("email", email);
+      console.log(email);
+
       console.log(
         `${isSignup ? "Signup" : "Signin"} successful:`,
         response.data

@@ -2,6 +2,7 @@ import React from "react";
 import { Inputfield2 } from "./Input";
 import Button from "./Button";
 import TimeIcon from "../icons/time";
+import { IconX } from "@tabler/icons-react";
 
 export default function PopUpModal({
   innerText,
@@ -10,27 +11,15 @@ export default function PopUpModal({
   setTitle,
   description,
   setDescription,
+  setShowModal,
 }) {
   const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const today = `${day}/${month}/${year}`;
-  const inputStyle = {
-    margin: "0.5rem auto",
-    border: "none",
-    width: "95%",
-    height: "3rem",
-    fontSize: "1.8rem",
-  };
+  const today = `${date.getDate()}/${
+    date.getMonth() + 1
+  }/${date.getFullYear()}`;
+
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div className="fixed inset-0 flex justify-center items-center bg-opacity-30 z-50">
       <div
         style={{
           width: "45.5rem",
@@ -40,16 +29,16 @@ export default function PopUpModal({
           backgroundColor: "white",
           display: "flex",
           flexDirection: "column",
-          alignContent: "center",
+          padding: "2rem",
+          position: "relative",
           filter: "drop-shadow(-6px 8px 10px gray)",
         }}
       >
-        <input
-          type="text"
-          placeholder="Description..."
-          style={inputStyle}
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+        <IconX
+          stroke={2}
+          className="absolute right-5 top-5 cursor-pointer"
+          size={30}
+          onClick={() => setShowModal(false)}
         />
         <Inputfield2
           type="text"
@@ -57,30 +46,26 @@ export default function PopUpModal({
           setVariable={setTitle}
           value={title}
         />
-
+        <Inputfield2
+          type="text"
+          title="Add Description"
+          setVariable={setDescription}
+          value={description}
+        />
         <div
           style={{
             display: "flex",
             position: "absolute",
-            marginTop: "24.5rem",
-            width: "45rem",
-            justifyContent: " space-between",
+            bottom: "1.5rem",
+            left: "2rem",
+            right: "2rem",
+            justifyContent: "space-between",
           }}
         >
-          <div
-            style={{
-              fontSize: "1.4rem",
-              marginLeft: "2rem",
-              display: "inline-block",
-              verticalAlign: "middle",
-            }}
-          >
-            <TimeIcon />
-            <span>{today}</span>
+          <div style={{ fontSize: "1.4rem" }}>
+            <TimeIcon /> <span>{today}</span>
           </div>
-          <div style={{}}>
-            <Button innerText={innerText} submit={submit} />
-          </div>
+          <Button innerText={innerText} submit={submit} />
         </div>
       </div>
     </div>

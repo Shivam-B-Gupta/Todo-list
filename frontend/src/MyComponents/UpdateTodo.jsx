@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import Button from "./Button";
+import Button, { Button2 } from "./Button";
 import { BACKEND_URL } from "../config";
 import PopUpModal from "./PopUpModal";
 import axios from "axios";
 import { IconEdit } from "@tabler/icons-react";
 
 export default function UpdateTodo({ todo, onUpdate }) {
-  console.log(todo);
   const todoId = todo._id;
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState(todo.title);
@@ -39,7 +38,7 @@ export default function UpdateTodo({ todo, onUpdate }) {
   }
   return (
     <div>
-      <Button
+      <Button2
         innerText={<IconEdit stroke={2} />}
         submit={() => setShowModal(true)}
       />

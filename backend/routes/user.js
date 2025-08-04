@@ -1,12 +1,12 @@
-const {Router} = require('express');
+const { Router } = require("express");
 const userRoutes = Router();
-const z = require('zod')
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
-const { userModel } = require('../db');
+const z = require("zod");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { userModel } = require("../db");
 const JWT_USER_PASSWORD = process.env.JWT_USER_PASSWORD;
 
-userRoutes.post('/signup', async function(req, res) {
+userRoutes.post("/signup", async function (req, res) {
   const requiredBody = z.object({
     email: z.string().min(3).max(50).email(),
     password: z.string().min(8).max(15),
@@ -42,39 +42,41 @@ userRoutes.post('/signup', async function(req, res) {
   });
 });
 
-userRoutes.post('/signin', async function(req,res){
-    const {email, password} = req.body;
-    
+userRoutes.post("/signin", async function (req, res) {
+  const { email, password } = req.body;
 
-    const user = await userModel.findOne({
-        email: email
-    })
-    console.log("user found: ", user)
+  const user = await userModel.findOne({
+    email: email,
+  });
+  console.log("user found: ", user);
 
-    if(!user){
-       return res.status(403).json({
-            mssg: "User not found"
-        })
-    }
+  if (!user) {
+    return res.status(403).json({
+      mssg: "User not found",
+    });
+  }
 
-    const decryptedPassword = await bcrypt.compare(password, user.password);
+  const decryptedPassword = await bcrypt.compare(password, user.password);
 
-    if(decryptedPassword){
-        const token = jwt.sign({
-            id: user.id
-        }, JWT_USER_PASSWORD)
-        res.json({
-            token: token,
-            firstname: user.firstname
-        })
-    }
-    else{
-        return res.status(403).json({
-            mssg: "Incorrect credentials"
-        })
-    }
-})
+  if (decryptedPassword) {
+    const token = jwt.sign(
+      {
+        id: user.id,
+      },
+      JWT_USER_PASSWORD
+    );
+    res.json({
+      token: token,
+      firstname: user.firstname,
+      email: user.email,
+    });
+  } else {
+    return res.status(403).json({
+      mssg: "Incorrect credentials",
+    });
+  }
+});
 
 module.exports = {
-    userRoutes : userRoutes
-}
+  userRoutes: userRoutes,
+};
