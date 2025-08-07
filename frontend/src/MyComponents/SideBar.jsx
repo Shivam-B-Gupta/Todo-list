@@ -10,22 +10,42 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 import PopUpModal from "./PopUpModal";
+import { useEffect } from "react";
 
 export default function SideBar() {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    localStorage.getItem("isAuthenticated") === "true"
+  );
+
+  useEffect(() => {
+    const handleAuthChange = () => {
+      setIsAuthenticated(localStorage.getItem("isAuthenticated") === "true");
+    };
+
+    window.addEventListener("authChange", handleAuthChange);
+
+    return () => {
+      window.removeEventListener("authChange", handleAuthChange);
+    };
+  }, []);
 
   function handleLogout() {
     localStorage.removeItem("token");
     localStorage.removeItem("firstname");
     localStorage.removeItem("email");
+    localStorage.setItem("isAuthenticated", false);
+    window.dispatchEvent(new Event("authChange"));
+
     window.location.href = "/todoiest/signin";
   }
 
   function handlePopUp(e) {
     e.preventDefault();
     setShowModal(true);
+    console.log(isAuthenticated);
   }
 
   function handleSubmit() {
@@ -51,14 +71,26 @@ export default function SideBar() {
         <a href="#" onClick={handlePopUp} className={LinkStyle}>
           <IconOctagonPlus stroke={2} size={28} /> Add Todo
         </a>
-        <Link to="/todoiest/signup" className={LinkStyle}>
-          <IconLock stroke={2} size={28} />
-          Signup
-        </Link>
+        <div className="flex items-center">
+          <Link to="/todoiest/signup" className={LinkStyle}>
+            <IconLock stroke={2} size={28} />
+            Signup
+          </Link>
+          <span className="text-lg text-gray-700">or</span>
+          <Link to="/todoiest/signin" className={LinkStyle}>
+            Signin
+          </Link>
+        </div>
       </div>
       <div className={LinkStyle}>
-        <IconLogout stroke={2} size={28} />
-        <Button innerText="Logout" submit={handleLogout} />
+        {isAuthenticated ? (
+          <>
+            <IconLogout stroke={2} size={28} />
+            <Button innerText="Logout" submit={handleLogout} />
+          </>
+        ) : (
+          <></>
+        )}
       </div>
 
       {showModal && (

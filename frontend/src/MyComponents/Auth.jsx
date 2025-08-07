@@ -2,9 +2,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import check from "../assets/check.webp";
-import cross from "../assets/cross.png";
-import "../styles/Auth.css";
+import Button, { Button2 } from "./Button";
+import { IconCircleCheck, IconXboxX } from "@tabler/icons-react";
 
 export default function AuthForm({ type }) {
   const isSignup = type === "signup";
@@ -39,6 +38,9 @@ export default function AuthForm({ type }) {
       localStorage.setItem("email", email);
       console.log(email);
 
+      localStorage.setItem("isAuthenticated", true);
+      window.dispatchEvent(new Event("authChange"));
+
       console.log(
         `${isSignup ? "Signup" : "Signin"} successful:`,
         response.data
@@ -56,83 +58,104 @@ export default function AuthForm({ type }) {
       alert(`${isSignup ? "Signup" : "Signin"} failed`);
     }
   };
-
+  // .container .left-container .leftchild-container{
+  //     display: flex;
+  // }
   return (
-    <div className="container ">
-      <div className="left-container ">
-        <h1>
-          {isSignup ? "A few steps away from becoming a pro" : "Welcome Back!"}
-        </h1>
-        <hr />
-        <div className="leftchild-container">
-          <img src={check} alt="Status" />
-          <h2 style={{ color: "white" }}>
-            {isSignup ? "Done" : "Enter your credentials"}
-          </h2>
+    <div className="w-full min-h-screen flex items-center justify-center bg-blue-50 p-4 ">
+      <div className="w-full max-w-5xl flex shadow-lg rounded-lg overflow-hidden bg-white">
+        {/* Left Panel */}
+        <div className="w-1/2 bg-blue-500 text-white p-8 flex flex-col justify-center items-center">
+          <h1 className="text-2xl font-semibold mb-4 text-center">
+            {isSignup
+              ? "A few steps away from becoming a pro"
+              : "Welcome Back!"}
+          </h1>
+          <hr className="border-white w-full mb-6" />
+          <div className="flex flex-col gap-6 items-center">
+            <div className="flex items-center gap-2">
+              <IconCircleCheck stroke={2} size={48} />
+              <h2 className="text-lg">
+                {isSignup ? "Done" : "Enter your credentials"}
+              </h2>
+            </div>
+            <div className="flex items-center gap-2">
+              <IconXboxX stroke={2} size={48} />
+              <h2 className="text-lg">
+                {isSignup ? "Not Done" : "Don't have an account?"}
+              </h2>
+            </div>
+          </div>
         </div>
-        <div className="leftchild-container">
-          <img src={cross} alt="Status" />
-          <h2 style={{ color: "red" }}>
-            {isSignup ? "Not Done" : "Don't have an account?"}
-          </h2>
-        </div>
-      </div>
 
-      <div className="right-container">
-        <h1>{isSignup ? "SignUp" : "Signin"}</h1>
-        <div className="rightChild-container">
-          <div className="inputContainer">
+        {/* Right Panel */}
+        <div className="w-1/2 p-8 bg-white">
+          <h1 className="text-2xl font-bold mb-6 text-center">
+            {isSignup ? "Sign Up" : "Sign In"}
+          </h1>
+          <div className="flex flex-col gap-4">
             <input
               type="email"
               value={email}
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
               required
+              className="border border-gray-300 p-3 rounded-lg"
             />
-          </div>
 
-          <div className="inputContainer">
             <input
               type="password"
               value={password}
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
               required
+              className="border border-gray-300 p-3 rounded-lg"
             />
-          </div>
 
-          {isSignup && (
-            <>
-              <div className="inputContainer">
+            {isSignup && (
+              <>
                 <input
                   type="text"
                   value={firstname}
-                  placeholder="Firstname"
+                  placeholder="First Name"
                   onChange={(e) => setFirstname(e.target.value)}
                   required
+                  className="border border-gray-300 p-3 rounded-lg"
                 />
-              </div>
-              <div className="inputContainer">
                 <input
                   type="text"
                   value={lastname}
-                  placeholder="Lastname"
+                  placeholder="Last Name"
                   onChange={(e) => setLastname(e.target.value)}
                   required
+                  className="border border-gray-300 p-3 rounded-lg"
                 />
-              </div>
-            </>
-          )}
+              </>
+            )}
 
-          <button onClick={handleSubmit}>
-            {isSignup ? "SignUp" : "Signin"}
-          </button>
+            <Button
+              onClick={handleSubmit}
+              innerText={isSignup ? "Sign Up" : "Sign In"}
+            />
 
-          {isSignup ? (
-            <Link to="/todoiest/signin">Already have an account? Signin</Link>
-          ) : (
-            <Link to="/todoiest/signup">Don't have an account? Signup</Link>
-          )}
+            <div className="text-center mt-4">
+              {isSignup ? (
+                <Link
+                  to="/todoiest/signin"
+                  className="text-blue-600 hover:underline"
+                >
+                  Already have an account? Sign in
+                </Link>
+              ) : (
+                <Link
+                  to="/todoiest/signup"
+                  className="text-blue-600 hover:underline"
+                >
+                  Don't have an account? Sign up
+                </Link>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { IconQuestionMark } from "@tabler/icons-react";
 
 export default function Header({ title, searchBar }) {
   const [firstLetter, setFirstLetter] = useState("");
@@ -46,7 +47,11 @@ export default function Header({ title, searchBar }) {
         )}
         <div className="flex items-center gap-2">
           <div className="bg-gray-300 rounded-full w-10 h-10 flex items-center justify-center text-sm font-bold cursor-pointer">
-            {firstLetter}
+            {firstLetter ? (
+              firstLetter
+            ) : (
+              <IconQuestionMark stroke={2} size={36} />
+            )}
           </div>
           <div className="flex flex-col text-white">
             <span>{firstname}</span>
